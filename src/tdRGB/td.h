@@ -22,9 +22,36 @@ typedef struct
     unsigned int size;
 } _td_arena;
 
+
+typedef struct
+{
+    int red;
+    int green;
+    int blue;
+} Color;
+
 /**
  * End Struct Definitions
  */
+
+
+/**
+ * Globals
+ */
+
+extern int _TD_WIDTH;
+extern int _TD_HEIGHT;
+extern _td_arena _TD_ARENA;
+extern char **_TD_CHAR_BUFFER;
+extern char *_TD_PRINT_BUFFER;
+extern Color **_TD_FG_COLOR_BUFFER;
+extern Color **_TD_BG_COLOR_BUFFER;
+
+/**
+ * End Globals
+ */
+
+
 
 
 /**
@@ -39,6 +66,16 @@ void *_td_alloc_arena(_td_arena *arena, unsigned int size);
  * End Internal Arena
  */
 
+
+/**
+ * Initialization
+ */
+
+int td_initialize(int width, int height);
+
+/**
+ * End Initialization
+ */
 
 #ifdef __cplusplus
 }
