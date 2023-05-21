@@ -9,7 +9,7 @@ library:
 	cp src/tdRGB/td.h lib
 
 build:
-	gcc src/*.c -o bin/exe -Ilib -Llib -ltdRGB -O2
+	gcc src/*.c -o bin/exe -Ilib -Llib -ltdRGB -O2 -std=c99
 
 run:
 	./bin/exe
