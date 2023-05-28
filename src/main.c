@@ -17,7 +17,10 @@ int main(void)
     {
         td_drawPoint(0, 0, '#', c0, c1);
         td_drawPoint(width - 1, height - 1, '#', c1, c0);
-        td_drawLine(0, 0, width-1, height-1, '-', c0, c1);
+        // td_drawLine(0, 0, 6, 2, '-', c0, c1);
+        td_drawLine(0, 0, 2, 6, '-', c0, c1);
+        td_drawLine(0, 6, 2, 0, '-', c0, c1);
+        // td_drawLine(0, 2, 6, 0, '-', c0, c1);
         td_display();
     }
     td_terminate(0);

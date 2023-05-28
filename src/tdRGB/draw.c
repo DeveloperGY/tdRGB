@@ -150,25 +150,151 @@ void td_drawRect(int x, int y, unsigned int width, unsigned int height, char str
 
 void td_drawLine(int x1, int y1, int x2, int y2, char c, td_color fgColor, td_color bgColor)
 {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int sx = (x1 < x2) ? 1 : -1;
-    int sy = (y1 < y2) ? 1 : -1;
-    int err = dx - dy;
-    
-    while (x1 != x2 || y1 != y2) {
-        td_drawPoint(x1, y1, c, fgColor, bgColor);
-        int e2 = 2 * err;
-        if (e2 > -dy) {
-            err -= dy;
-            x1 += sx;
+    float slope = (float)(y2 - y1) / (float)(x2-x1);
+
+    if (slope >= 0)
+    {
+        // positive slope, +1
+
+        if (slope > 1)
+        {
+            // loop y
+
+            if (y1 > y2)
+            {
+                int temp = x1;
+                x1 = x2;
+                x2 = temp;
+
+                temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+            td_drawPoint(x1, y1, c, fgColor, bgColor);
+
+            slope = 1/slope;
+
+            float err = 0;
+            float x = 0;
+            
+            for (int y=0; y<y2-y1; y++)
+            {
+                err += slope;
+
+                if (err > 0.5)
+                {
+                    err--;
+                    x++;
+                }
+
+                td_drawPoint(x1 + x, y1 + y, c, fgColor, bgColor);
+            }
         }
-        if (e2 < dx) {
-            err += dx;
-            y1 += sy;
+        else
+        {
+            // loop x
+
+            if (x1 > x2)
+            {
+                int temp = x1;
+                x1 = x2;
+                x2 = temp;
+
+                temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+            td_drawPoint(x1, y1, c, fgColor, bgColor);
+
+
+            float err = 0;
+            float y = 0;
+            
+            for (int x=0; x<x2-x1; x++)
+            {
+                err += slope;
+
+                if (err > 0.5)
+                {
+                    err--;
+                    y++;
+                }
+
+                td_drawPoint(x1 + x, y1 + y, c, fgColor, bgColor);
+            }
         }
     }
-    td_drawPoint(x1, y1, c, fgColor, bgColor);
+    else
+    {
+        // negative slope, -1
+
+        if (slope < -1)
+        {
+            // loop y
+
+            if (y1 > y2)
+            {
+                int temp = x1;
+                x1 = x2;
+                x2 = temp;
+
+                temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+            td_drawPoint(x1, y1, c, fgColor, bgColor);
+
+            slope = 1/slope;
+
+            float err = 0;
+            float x = 0;
+            
+            for (int y=0; y<y2-y1; y++)
+            {
+                err -= slope;
+
+                if (err > 0.5)
+                {
+                    err--;
+                    x--;
+                }
+
+                td_drawPoint(x1 + x, y1 + y, c, fgColor, bgColor);
+            }
+        }
+        else
+        {
+            // loop x
+            if (x1 > x2)
+            {
+                int temp = x1;
+                x1 = x2;
+                x2 = temp;
+
+                temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+            td_drawPoint(x1, y1, c, fgColor, bgColor);
+
+
+            float err = 0;
+            float y = 0;
+            
+            for (int x=0; x<x2-x1; x++)
+            {
+                err -= slope;
+
+                if (err > 0.5)
+                {
+                    err--;
+                    y--;
+                }
+
+                td_drawPoint(x1 + x, y1 + y, c, fgColor, bgColor);
+            }
+        }
+    }
 
     return;
 }
